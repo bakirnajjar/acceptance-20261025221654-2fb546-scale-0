@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0",
+  "stage": "requirements_analysis",
+  "source_references": [
+    {
+      "source_type": "user_story",
+      "source_id": "user_story",
+      "locator": "characters 0-16000"
+    },
+    {
+      "source_type": "knowledge",
+      "source_id": "467a71ce-c5f8-4557-8f1e-a8ff1b01ecc3",
+      "locator": "v1, chunk 0"
+    },
+    {
+      "source_type": "knowledge",
+      "source_id": "59efeb19-83f2-4ec6-bfd3-b4aeb7142930",
+      "locator": "v1, chunk 0"
+    }
+  ],
+  "assumptions": [
+    "acceptance-20261025221654-2fb546-skill-sentinel — the acceptance requirements skill produced this output.",
+    "The complete pinned story has no end marker. No attachments or approved prior-stage outputs were supplied, so there is no attachment marker or prior-stage reference to carry forward.",
+    "Only the customer password-reset outcome and the cited recovery-standard behaviors are in scope. No recovery-link delivery channel is prescribed; tests may arrange an issued link as a fixture.",
+    "No proof-of-ownership or verification protocol is specified; tests may arrange an eligible customer with a valid link as a precondition without waiving implementation security controls.",
+    "No new-password eligibility or complexity policy is specified; tests may use an eligible new password as a fixture without defining that policy.",
+    "For the five-per-account-per-hour limit, tests use five accepted requests and a sixth within an unambiguous shared one-hour period; neither window-boundary convention nor the response to a limited request is prescribed.",
+    "Notification to the owner is required after each successful reset, but no notification channel or message content is prescribed."
+  ],
+  "open_questions": [
+    {
+      "question": "Through which channel is a reset link delivered?",
+      "blocking": false,
+      "context": "Assumption: no delivery channel is prescribed; test link behavior with an issued link as a fixture."
+    },
+    {
+      "question": "What proof-of-ownership or verification is required to issue or use a reset link?",
+      "blocking": false,
+      "context": "Assumption: no protocol is specified; test completion with an eligible customer and valid link without waiving implementation security controls."
+    },
+    {
+      "question": "What new-password eligibility or complexity rules apply?",
+      "blocking": false,
+      "context": "Assumption: no password policy is prescribed; use an eligible new password as a test fixture."
+    },
+    {
+      "question": "How is the hourly request window bounded, and what response is returned at the request limit?",
+      "blocking": false,
+      "context": "Assumption: test five accepted requests and a sixth in an unambiguous shared one-hour period; do not prescribe boundary semantics or response."
+    },
+    {
+      "question": "Through which channel and with what content is the account owner notified?",
+      "blocking": false,
+      "context": "Assumption: require notification after each successful reset without prescribing channel or content."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "statement": "A customer can complete a password reset so the new password replaces the previous password.",
+      "acceptance_criteria": [
+        "Given an eligible customer and a valid, unused, unexpired reset link, when the customer completes a reset with an eligible new password, then the new password works for subsequent sign-in and the previous password no longer does."
+      ],
+      "source_references": [
+        {
+          "source_type": "user_story",
+          "source_id": "user_story",
+          "locator": "characters 0-16000"
+        }
+      ]
+    },
+    {
+      "id": "REQ-002",
+      "statement": "The sign-in page offers a \"Forgot password?\" link that starts a password reset request.",
+      "acceptance_criteria": [
+        "Given the sign-in page, when a customer selects \"Forgot password?\", then the password-reset request flow begins."
+      ],
+      "source_references": [
+        {
+          "source_type": "user_story",
+          "source_id": "user_story",
+          "locator": "characters 0-16000"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "467a71ce-c5f8-4557-8f1e-a8ff1b01ecc3",
+          "locator": "v1, chunk 0"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "59efeb19-83f2-4ec6-bfd3-b4aeb7142930",
+          "locator": "v1, chunk 0"
+        }
+      ]
+    },
+    {
+      "id": "REQ-003",
+      "statement": "A password-reset request returns an identical response whether the account exists or not.",
+      "acceptance_criteria": [
+        "Given otherwise equivalent reset requests for an existing and a nonexistent account, when each request is submitted, then the externally observable request responses are identical."
+      ],
+      "source_references": [
+        {
+          "source_type": "user_story",
+          "source_id": "user_story",
+          "locator": "characters 0-16000"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "467a71ce-c5f8-4557-8f1e-a8ff1b01ecc3",
+          "locator": "v1, chunk 0"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "59efeb19-83f2-4ec6-bfd3-b4aeb7142930",
+          "locator": "v1, chunk 0"
+        }
+      ]
+    },
+    {
+      "id": "REQ-004",
+      "statement": "Password-reset requests are limited to five per account per hour.",
+      "acceptance_criteria": [
+        "Given five accepted reset requests for the same account in a one-hour period, when a sixth is attempted in that period, then the sixth request is not accepted as another reset request for that account."
+      ],
+      "source_references": [
+        {
+          "source_type": "user_story",
+          "source_id": "user_story",
+          "locator": "characters 0-16000"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "467a71ce-c5f8-4557-8f1e-a8ff1b01ecc3",
+          "locator": "v1, chunk 0"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "59efeb19-83f2-4ec6-bfd3-b4aeb7142930",
+          "locator": "v1, chunk 0"
+        }
+      ]
+    },
+    {
+      "id": "REQ-005",
+      "statement": "A reset link can complete at most one password reset.",
+      "acceptance_criteria": [
+        "Given a valid, unexpired reset link that has completed a reset, when that link is used again, then it cannot complete another reset."
+      ],
+      "source_references": [
+        {
+          "source_type": "user_story",
+          "source_id": "user_story",
+          "locator": "characters 0-16000"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "467a71ce-c5f8-4557-8f1e-a8ff1b01ecc3",
+          "locator": "v1, chunk 0"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "59efeb19-83f2-4ec6-bfd3-b4aeb7142930",
+          "locator": "v1, chunk 0"
+        }
+      ]
+    },
+    {
+      "id": "REQ-006",
+      "statement": "A reset link expires 30 minutes after it is issued.",
+      "acceptance_criteria": [
+        "Given a reset link issued at time T, when an attempt to complete a reset with it occurs at or after T plus 30 minutes, then the link cannot complete the reset."
+      ],
+      "source_references": [
+        {
+          "source_type": "user_story",
+          "source_id": "user_story",
+          "locator": "characters 0-16000"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "467a71ce-c5f8-4557-8f1e-a8ff1b01ecc3",
+          "locator": "v1, chunk 0"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "59efeb19-83f2-4ec6-bfd3-b4aeb7142930",
+          "locator": "v1, chunk 0"
+        }
+      ]
+    },
+    {
+      "id": "REQ-007",
+      "statement": "Completing a password reset signs the account out of every active session.",
+      "acceptance_criteria": [
+        "Given an account with one or more active sessions, when its password reset completes, then none of those sessions remains authenticated."
+      ],
+      "source_references": [
+        {
+          "source_type": "user_story",
+          "source_id": "user_story",
+          "locator": "characters 0-16000"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "467a71ce-c5f8-4557-8f1e-a8ff1b01ecc3",
+          "locator": "v1, chunk 0"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "59efeb19-83f2-4ec6-bfd3-b4aeb7142930",
+          "locator": "v1, chunk 0"
+        }
+      ]
+    },
+    {
+      "id": "REQ-008",
+      "statement": "The account owner is notified after every successful password reset.",
+      "acceptance_criteria": [
+        "Given an account owner, when each password reset for that account succeeds, then the owner is notified for that successful reset."
+      ],
+      "source_references": [
+        {
+          "source_type": "user_story",
+          "source_id": "user_story",
+          "locator": "characters 0-16000"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "467a71ce-c5f8-4557-8f1e-a8ff1b01ecc3",
+          "locator": "v1, chunk 0"
+        },
+        {
+          "source_type": "knowledge",
+          "source_id": "59efeb19-83f2-4ec6-bfd3-b4aeb7142930",
+          "locator": "v1, chunk 0"
+        }
+      ]
+    }
+  ]
+}
